@@ -37,7 +37,7 @@ class MLPClassifier(nn.Module):
             layers.append(nn.Linear(sizes[i], sizes[i+1]))
             if i < len(sizes) - 2:
                 layers.append(nn.ReLU())
-        # connectin them sequentinally
+        # connecting them sequentinally
         self.model = nn.Sequential(*layers)
         print(layers)
         print(sizes)
@@ -61,6 +61,26 @@ X_val, X_test, y_val, y_test = train_test_split(
 train_dataset = TensorDataset(X_train, y_train)
 train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
 
+
+# for showing "train_dataset"
+# for i in range(3):
+#     sample = train_dataset[i]
+#     print(f"Sample {i + 1}:")
+#     print("Features:", sample[0])
+#     print("Label:", sample[1])
+#     print()
+
+
+# for showing "train_loader"
+# for batch in train_loader:
+#     inputs, labels = batch
+#     print(inputs[:5,], labels[:5,])
+#     print("Batch:")
+#     print("Batch Size:", len(inputs))
+#     print("Features Shape:", inputs.shape)
+#     print("Labels Shape:", labels.shape)
+
+
 # Instantiate the model
 model = MLPClassifier(input_size=2, hidden_sizes=[64, 32], output_size=3)
 
@@ -69,8 +89,8 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # Training the Model
-num_epochs = 1000
-for epoch in range(num_epochs):
+epochs = 500
+for epoch in range(epochs):
     model.train()
     for inputs, labels in train_loader:
         optimizer.zero_grad()
@@ -80,7 +100,7 @@ for epoch in range(num_epochs):
         optimizer.step()
 
     if (epoch+1) % 50 == 0:
-        print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+        print(f'Epoch [{epoch+1}/{epochs}], Loss: {loss.item():.4f}')
 
 # Validate the Model
 model.eval()
