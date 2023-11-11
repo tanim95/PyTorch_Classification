@@ -32,11 +32,15 @@ class MLPClassifier(nn.Module):
         super(MLPClassifier, self).__init__()
         layers = []
         sizes = [input_size] + hidden_sizes + [output_size]
+        # making layers
         for i in range(len(sizes) - 1):
             layers.append(nn.Linear(sizes[i], sizes[i+1]))
             if i < len(sizes) - 2:
                 layers.append(nn.ReLU())
+        # connectin them sequentinally
         self.model = nn.Sequential(*layers)
+        print(layers)
+        print(sizes)
 
     def forward(self, x):
         return self.model(x)
