@@ -86,7 +86,7 @@ model = MLPClassifier(input_size=2, hidden_sizes=[64, 32], output_size=3)
 
 # Define Loss Function and Optimizer
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.004)
 
 # Training the Model
 epochs = 500
